@@ -18,9 +18,7 @@ public class PlayerService {
     }
 
     public Player getPlayerById(long id) {
-        Optional<Player> divisionOptional = playerRepository.findById(id);
-
-        return divisionOptional.orElse(null);
+        return playerRepository.findById(id).orElseGet(() -> null); // Change made here
     }
 
     public void deletePlayerById(long id) {
@@ -32,18 +30,13 @@ public class PlayerService {
     }
 
     public Player updatePlayer(long id, Player updatedPlayer) {
-        Optional<Player> playerToUpdateOptional = playerRepository.findById(id);
-
-        if (playerToUpdateOptional.isPresent()) {
-            Player playerToUpdate = playerToUpdateOptional.get();
-
-            playerToUpdate.setFirstName(updatedPlayer.getFirstName());
-            playerToUpdate.setLastName(updatedPlayer.getLastName());
-            playerToUpdate.setBirthday(updatedPlayer.getBirthday());
-
-            return playerRepository.save(playerToUpdate);
-        }
-
-        return null;
+        return playerRepository.findById(id)
+                .map(existingPlayer -> {
+                    existingPlayer.setFirstName(updatedPlayer.getFirstName());
+                    existingPlayer.setLastName(updatedPlayer.getLastName());
+                    existingPlayer.setBirthday(updatedPlayer.getBirthday());
+                    return playerRepository.save(existingPlayer);
+                })
+                .orElseGet(() -> null); //
     }
 }
