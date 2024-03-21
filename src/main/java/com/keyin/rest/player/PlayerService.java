@@ -2,6 +2,8 @@ package com.keyin.rest.player;
 
 import com.keyin.rest.division.Division;
 import com.keyin.rest.division.DivisionRepository;
+import com.keyin.rest.exception.ResourceNotFoundException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,7 +22,7 @@ public class PlayerService {
     public Player getPlayerById(long id) {
         Optional<Player> divisionOptional = playerRepository.findById(id);
 
-        return divisionOptional.orElse(null);
+        return divisionOptional.orElseThrow(() -> new ResourceNotFoundException("Player not found with ID: " + id));
     }
 
     public void deletePlayerById(long id) {
@@ -32,18 +34,13 @@ public class PlayerService {
     }
 
     public Player updatePlayer(long id, Player updatedPlayer) {
-        Optional<Player> playerToUpdateOptional = playerRepository.findById(id);
+        Player playerToUpdate = playerRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Player not found with ID: " + id));
 
-        if (playerToUpdateOptional.isPresent()) {
-            Player playerToUpdate = playerToUpdateOptional.get();
+        playerToUpdate.setFirstName(updatedPlayer.getFirstName());
+        playerToUpdate.setLastName(updatedPlayer.getLastName());
+        playerToUpdate.setBirthday(updatedPlayer.getBirthday());
 
-            playerToUpdate.setFirstName(updatedPlayer.getFirstName());
-            playerToUpdate.setLastName(updatedPlayer.getLastName());
-            playerToUpdate.setBirthday(updatedPlayer.getBirthday());
-
-            return playerRepository.save(playerToUpdate);
-        }
-
-        return null;
+        return playerRepository.save(playerToUpdate);
     }
 }
