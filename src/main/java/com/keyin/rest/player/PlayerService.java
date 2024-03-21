@@ -1,49 +1,44 @@
 package com.keyin.rest.player;
 
-import com.keyin.rest.division.Division;
-import com.keyin.rest.division.DivisionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class PlayerService {
+
+    private final PlayerRepository playerRepository;
+
     @Autowired
-    private PlayerRepository playerRepository;
+    public PlayerService(PlayerRepository playerRepository) {
+        this.playerRepository = playerRepository;
+    }
 
     public List<Player> getAllPlayers() {
-        return (List<Player>) playerRepository.findAll();
+        return playerRepository.findAll();
     }
 
     public Player getPlayerById(long id) {
-        Optional<Player> divisionOptional = playerRepository.findById(id);
-
-        return divisionOptional.orElse(null);
+        return playerRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Player not found"));
     }
 
-    public void deletePlayerById(long id) {
-        playerRepository.deleteById(id);
+    public Player createPlayer(Player player) {
+        return playerRepository.save(player);
     }
 
-    public Player createPlayer(Player newPlayer) {
-        return playerRepository.save(newPlayer);
-    }
-
-    public Player updatePlayer(long id, Player updatedPlayer) {
-        Optional<Player> playerToUpdateOptional = playerRepository.findById(id);
-
-        if (playerToUpdateOptional.isPresent()) {
-            Player playerToUpdate = playerToUpdateOptional.get();
-
-            playerToUpdate.setFirstName(updatedPlayer.getFirstName());
-            playerToUpdate.setLastName(updatedPlayer.getLastName());
-            playerToUpdate.setBirthday(updatedPlayer.getBirthday());
-
-            return playerRepository.save(playerToUpdate);
+    public Player updatePlayer(long id, Player player) {
+        if (!playerRepository.existsById(id)) {
+            throw new IllegalArgumentException("Player not found");
         }
+        player.setId(id); // Ensure the ID is set for update
+        return playerRepository.save(player);
+    }
 
-        return null;
+    public void deletePlayer(long id) {
+        if (!playerRepository.existsById(id)) {
+            throw new IllegalArgumentException("Player not found");
+        }
+        playerRepository.deleteById(id);
     }
 }

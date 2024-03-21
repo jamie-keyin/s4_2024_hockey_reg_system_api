@@ -1,18 +1,20 @@
 package com.keyin.rest.player;
 
-import com.keyin.rest.division.Division;
-import com.keyin.rest.division.DivisionService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@CrossOrigin
+@RequestMapping("/api")
 public class PlayerController {
+
+    private final PlayerService playerService;
+
     @Autowired
-    private PlayerService playerService;
+    public PlayerController(PlayerService playerService) {
+        this.playerService = playerService;
+    }
 
     @GetMapping("/player")
     public List<Player> getAllPlayers() {
@@ -30,12 +32,12 @@ public class PlayerController {
     }
 
     @PutMapping("/player/{id}")
-    public ResponseEntity<Player> updatePlayer(@PathVariable long id, @RequestBody Player player) {
-        return ResponseEntity.ok(playerService.updatePlayer(id, player));
+    public Player updatePlayer(@PathVariable long id, @RequestBody Player player) {
+        return playerService.updatePlayer(id, player);
     }
 
     @DeleteMapping("/player/{id}")
-    public void deletePlayerById(@PathVariable long id) {
-        playerService.deletePlayerById(id);
+    public void deletePlayer(@PathVariable long id) {
+        playerService.deletePlayer(id);
     }
 }
