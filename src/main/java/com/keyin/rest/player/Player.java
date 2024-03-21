@@ -1,6 +1,5 @@
 package com.keyin.rest.player;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
