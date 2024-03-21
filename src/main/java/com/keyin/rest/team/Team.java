@@ -17,7 +17,7 @@ public class Team {
     @ManyToMany
     private List<Player> players;
 
-    @ManyToOne
+    @OneToOne
     private Division division;
 
     public long getId() {
@@ -42,13 +42,5 @@ public class Team {
 
     public void setPlayers(List<Player> players) {
         this.players = players;
-    }
-
-    public Division getDivision() {
-        return division;
-    }
-
-    public void setDivision(Division division) {
-        this.division = division;
     }
 }
