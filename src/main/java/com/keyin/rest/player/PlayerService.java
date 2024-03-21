@@ -13,37 +13,22 @@ public class PlayerService {
     @Autowired
     private PlayerRepository playerRepository;
 
-    public List<Player> getAllPlayers() {
-        return (List<Player>) playerRepository.findAll();
-    }
+    public List<Player> getAllPlayers() { return (List<Player>) playerRepository.findAll(); }
 
-    public Player getPlayerById(long id) {
-        Optional<Player> divisionOptional = playerRepository.findById(id);
+    public Player getPlayerById(long id) { return playerRepository.findById(id).orElse(null); }
 
-        return divisionOptional.orElse(null);
-    }
+    public void deletePlayerById(long id) { playerRepository.deleteById(id); }
 
-    public void deletePlayerById(long id) {
-        playerRepository.deleteById(id);
-    }
-
-    public Player createPlayer(Player newPlayer) {
-        return playerRepository.save(newPlayer);
-    }
+    public Player createPlayer(Player newPlayer) { return playerRepository.save(newPlayer); }
 
     public Player updatePlayer(long id, Player updatedPlayer) {
-        Optional<Player> playerToUpdateOptional = playerRepository.findById(id);
-
-        if (playerToUpdateOptional.isPresent()) {
-            Player playerToUpdate = playerToUpdateOptional.get();
-
-            playerToUpdate.setFirstName(updatedPlayer.getFirstName());
-            playerToUpdate.setLastName(updatedPlayer.getLastName());
-            playerToUpdate.setBirthday(updatedPlayer.getBirthday());
-
-            return playerRepository.save(playerToUpdate);
-        }
-
-        return null;
+        return playerRepository.findById(id)
+                .map(existingPlayer -> {
+                    existingPlayer.setFirstName(updatedPlayer.getFirstName());
+                    existingPlayer.setLastName(updatedPlayer.getLastName());
+                    existingPlayer.setBirthday(updatedPlayer.getBirthday());
+                    return playerRepository.save(existingPlayer);
+                })
+                .orElse(null);
     }
 }
