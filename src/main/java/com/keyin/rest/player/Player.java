@@ -1,37 +1,41 @@
 package com.keyin.rest.player;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.SequenceGenerator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.persistence.*;
 
-import java.util.Calendar;
+import java.time.LocalDate;
 
-@Entity
+@Entity(name = "player")
+@Table(name = "player")
 public class Player {
-
     @Id
-    @SequenceGenerator(name = "player_sequence", sequenceName = "player_sequence", allocationSize = 1, initialValue=1)
-    @GeneratedValue(generator = "player_sequence")
-    private long id;
-    private Calendar birthday;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(
+            name = "first_name",
+            nullable = false
+    )
     private String firstName;
+
+    @Column(
+            name = "last_name",
+            nullable = false
+    )
     private String lastName;
 
-    public long getId() {
+    @Column(
+            name = "birthday",
+            nullable = false
+    )
+    private LocalDate birthday;
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
-    }
-
-    public Calendar getBirthday() {
-        return birthday;
-    }
-
-    public void setBirthday(Calendar birthday) {
-        this.birthday = birthday;
     }
 
     public String getFirstName() {
@@ -48,6 +52,14 @@ public class Player {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public LocalDate getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(LocalDate birthday) {
+        this.birthday = birthday;
     }
 }
 
