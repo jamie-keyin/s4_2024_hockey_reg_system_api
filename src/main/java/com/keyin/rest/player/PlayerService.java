@@ -1,7 +1,5 @@
 package com.keyin.rest.player;
 
-import com.keyin.rest.division.Division;
-import com.keyin.rest.division.DivisionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,17 +8,20 @@ import java.util.Optional;
 
 @Service
 public class PlayerService {
+
+    private final PlayerRepository playerRepository;
+
     @Autowired
-    private PlayerRepository playerRepository;
+    public PlayerService(PlayerRepository playerRepository) {
+        this.playerRepository = playerRepository;
+    }
 
     public List<Player> getAllPlayers() {
         return (List<Player>) playerRepository.findAll();
     }
 
     public Player getPlayerById(long id) {
-        Optional<Player> divisionOptional = playerRepository.findById(id);
-
-        return divisionOptional.orElse(null);
+        return playerRepository.findById(id).orElse(null);
     }
 
     public void deletePlayerById(long id) {
@@ -33,17 +34,17 @@ public class PlayerService {
 
     public Player updatePlayer(long id, Player updatedPlayer) {
         Optional<Player> playerToUpdateOptional = playerRepository.findById(id);
-
         if (playerToUpdateOptional.isPresent()) {
             Player playerToUpdate = playerToUpdateOptional.get();
-
-            playerToUpdate.setFirstName(updatedPlayer.getFirstName());
-            playerToUpdate.setLastName(updatedPlayer.getLastName());
-            playerToUpdate.setBirthday(updatedPlayer.getBirthday());
-
+            updatePlayerDetails(playerToUpdate, updatedPlayer);
             return playerRepository.save(playerToUpdate);
         }
-
         return null;
+    }
+
+    private void updatePlayerDetails(Player playerToUpdate, Player updatedPlayer) {
+        playerToUpdate.setFirstName(updatedPlayer.getFirstName());
+        playerToUpdate.setLastName(updatedPlayer.getLastName());
+        playerToUpdate.setBirthday(updatedPlayer.getBirthday());
     }
 }
