@@ -1,41 +1,59 @@
 package com.keyin.rest.player;
 
-import com.keyin.rest.division.Division;
-import com.keyin.rest.division.DivisionService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RestController
-@CrossOrigin
+@RequestMapping("/api")
 public class PlayerController {
+
+    private final PlayerService playerService;
+
     @Autowired
-    private PlayerService playerService;
+    public PlayerController(PlayerService playerService) {
+        this.playerService = playerService;
+    }
 
     @GetMapping("/player")
-    public List<Player> getAllPlayers() {
-        return playerService.getAllPlayers();
+    public ResponseEntity<?> getAllPlayers() {
+        return ResponseEntity.ok(playerService.getAllPlayers());
     }
 
     @GetMapping("/player/{id}")
-    public Player getPlayerById(@PathVariable long id) {
-        return playerService.getPlayerById(id);
+    public ResponseEntity<?> getPlayerById(@PathVariable("id") Long id) {
+        Player player = playerService.getPlayerById(id);
+        if (player != null) {
+            return ResponseEntity.ok(player);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Player not found");
+        }
     }
 
     @PostMapping("/player")
-    public Player createPlayer(@RequestBody Player player) {
-        return playerService.createPlayer(player);
+    public ResponseEntity<?> createPlayer(@RequestBody Player player) {
+        playerService.createPlayer(player);
+        return ResponseEntity.status(HttpStatus.CREATED).body("Player created successfully");
     }
 
     @PutMapping("/player/{id}")
-    public ResponseEntity<Player> updatePlayer(@PathVariable long id, @RequestBody Player player) {
-        return ResponseEntity.ok(playerService.updatePlayer(id, player));
+    public ResponseEntity<?> updatePlayer(@PathVariable("id") Long id, @RequestBody Player player) {
+        boolean updated = playerService.updatePlayer(id, player);
+        if (updated) {
+            return ResponseEntity.ok("Player updated successfully");
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Player not found");
+        }
     }
 
     @DeleteMapping("/player/{id}")
-    public void deletePlayerById(@PathVariable long id) {
-        playerService.deletePlayerById(id);
+    public ResponseEntity<?> deletePlayer(@PathVariable("id") Long id) {
+        boolean deleted = playerService.deletePlayer(id);
+        if (deleted) {
+            return ResponseEntity.ok("Player deleted successfully");
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Player not found");
+        }
     }
 }
