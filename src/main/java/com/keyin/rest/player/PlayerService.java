@@ -1,49 +1,47 @@
 package com.keyin.rest.player;
 
-import com.keyin.rest.division.Division;
-import com.keyin.rest.division.DivisionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class PlayerService {
+
+    private final PlayerRepository playerRepository;
+
     @Autowired
-    private PlayerRepository playerRepository;
+    public PlayerService(PlayerRepository playerRepository) {
+        this.playerRepository = playerRepository;
+    }
 
     public List<Player> getAllPlayers() {
-        return (List<Player>) playerRepository.findAll();
+        return playerRepository.findAll();
     }
 
-    public Player getPlayerById(long id) {
-        Optional<Player> divisionOptional = playerRepository.findById(id);
-
-        return divisionOptional.orElse(null);
+    public Player getPlayerById(Long id) {
+        return playerRepository.findById(id).orElse(null);
     }
 
-    public void deletePlayerById(long id) {
-        playerRepository.deleteById(id);
+    public void createPlayer(Player player) {
+        playerRepository.save(player);
     }
 
-    public Player createPlayer(Player newPlayer) {
-        return playerRepository.save(newPlayer);
-    }
-
-    public Player updatePlayer(long id, Player updatedPlayer) {
-        Optional<Player> playerToUpdateOptional = playerRepository.findById(id);
-
-        if (playerToUpdateOptional.isPresent()) {
-            Player playerToUpdate = playerToUpdateOptional.get();
-
-            playerToUpdate.setFirstName(updatedPlayer.getFirstName());
-            playerToUpdate.setLastName(updatedPlayer.getLastName());
-            playerToUpdate.setBirthday(updatedPlayer.getBirthday());
-
-            return playerRepository.save(playerToUpdate);
+    public boolean updatePlayer(Long id, Player player) {
+        if (playerRepository.existsById(id)) {
+            player.setId(id);
+            playerRepository.save(player);
+            return true;
+        } else {
+            return false;
         }
+    }
 
-        return null;
+    public boolean deletePlayer(Long id) {
+        if (playerRepository.existsById(id)) {
+            playerRepository.deleteById(id);
+            return true;
+        } else {
+            return false;
+        }
     }
 }
