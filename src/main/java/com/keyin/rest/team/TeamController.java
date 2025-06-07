@@ -64,4 +64,14 @@ public class TeamController {
     public void deleteTeamById(@PathVariable long id) {
         teamService.deleteTeamById(id);
     }
+
+
+    @PostMapping("/team/{id}/players")
+    public ResponseEntity<Team> addPlayersToTeam(@PathVariable Long id, @RequestBody List<Player> players) {
+        Team updatedTeam = teamService.addPlayersToTeam(id, players);
+        if (updatedTeam == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(updatedTeam);
+    }
 }
