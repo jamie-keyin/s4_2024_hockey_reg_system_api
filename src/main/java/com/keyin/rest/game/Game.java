@@ -1,13 +1,23 @@
 package com.keyin.rest.game;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.SequenceGenerator;
+
 import java.time.LocalDateTime;
 
+@Entity
 public class Game {
 
+    @Id
+    @SequenceGenerator(name = "game_sequence", sequenceName = "game_sequence", allocationSize = 1, initialValue=1)
+    @GeneratedValue(generator = "game_sequence")
     private String homeTeam;
     private String awayTeam;
     private String location;
     private LocalDateTime gameDate;
+    private long id;
 
     public Game() {} // empty constructor
 
@@ -20,6 +30,14 @@ public class Game {
 
     // getters and setters
 
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
 
     public String getHomeTeam() {
         return homeTeam;
