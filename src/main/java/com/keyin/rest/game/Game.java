@@ -1,10 +1,7 @@
 package com.keyin.rest.game;
 
 import com.keyin.rest.team.Team;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.SequenceGenerator;
+import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
 
@@ -14,15 +11,17 @@ public class Game {
     @Id
     @SequenceGenerator(name = "game_sequence", sequenceName = "game_sequence", allocationSize = 1, initialValue=1)
     @GeneratedValue(generator = "game_sequence")
+    private long id;
+    @ManyToOne
     private Team homeTeam;
+    @ManyToOne
     private Team awayTeam;
     private String location;
     private LocalDateTime gameDate;
-    private long id;
 
     public Game() {} // empty constructor
 
-    public Game(String homeTeam, String awayTeam, String location, LocalDateTime gameDate) {
+    public Game(Team homeTeam, Team awayTeam, String location, LocalDateTime gameDate) {
         this.homeTeam = homeTeam;
         this.awayTeam = awayTeam;
         this.location = location;
@@ -40,19 +39,19 @@ public class Game {
         this.id = id;
     }
 
-    public String getHomeTeam() {
+    public Team getHomeTeam() {
         return homeTeam;
     }
 
-    public void setHomeTeam(String homeTeam) {
+    public void setHomeTeam(Team homeTeam) {
         this.homeTeam = homeTeam;
     }
 
-    public String getAwayTeam() {
+    public Team getAwayTeam() {
         return awayTeam;
     }
 
-    public void setAwayTeam(String awayTeam) {
+    public void setAwayTeam(Team awayTeam) {
         this.awayTeam = awayTeam;
     }
 
