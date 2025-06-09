@@ -1,5 +1,6 @@
 package com.keyin.rest.game;
 
+import com.keyin.rest.team.Team;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
@@ -13,8 +14,8 @@ public class Game {
     @Id
     @SequenceGenerator(name = "game_sequence", sequenceName = "game_sequence", allocationSize = 1, initialValue=1)
     @GeneratedValue(generator = "game_sequence")
-    private String homeTeam;
-    private String awayTeam;
+    private Team homeTeam;
+    private Team awayTeam;
     private String location;
     private LocalDateTime gameDate;
     private long id;

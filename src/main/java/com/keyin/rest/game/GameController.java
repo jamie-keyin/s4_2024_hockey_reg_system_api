@@ -1,24 +1,41 @@
 package com.keyin.rest.game;
 
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("/game")
+@CrossOrigin
 public class GameController {
-    private final List<Game> games = new ArrayList<>();
+    @Autowired
+    private GameService gameService;
 
-    @GetMapping
+    @GetMapping("/games")
     public List<Game> getAllGames() {
-        return games;
+        return gameService.getAllGames();
     }
 
-    @PostMapping
-    public Game createGame(@RequestBody Game newGame) {
-        games.add(newGame);
-        return newGame;
+    @GetMapping("/games/{id}")
+    public Game getGameById(@PathVariable long id) {
+        return gameService.getGameById(id);
+    }
+
+    @PostMapping("/game")
+    public Game createGame(@RequestBody Game game) {
+        return gameService.createGame(game);
+    }
+
+    @PutMapping("/game/{id}")
+    public ResponseEntity<Game> updateGame(@PathVariable long id, @RequestBody Game game) {
+        return ResponseEntity.ok(gameService.updateGame(id, game));
+    }
+
+    @DeleteMapping("/game/{id}")
+    public void deleteGameById(@PathVariable long id) {
+        gameService.deleteGameById(id);
     }
 }
