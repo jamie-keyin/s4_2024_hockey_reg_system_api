@@ -3,19 +3,20 @@ package com.keyin.rest.game;
 import jakarta.persistence.*;
 import java.time.LocalDate;
 import com.keyin.rest.team.Team;
-
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Game {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private Team homeTeam;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private Team awayTeam;
 
     private String location;

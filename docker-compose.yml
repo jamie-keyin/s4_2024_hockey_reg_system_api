@@ -1,11 +1,18 @@
-version: '3'
+version: '3.8'
+
 services:
-  myapp-main:
-    image: hockey_db_api:latest
-    ports:
-      - 8080:8080
+  mysql:
+    image: mysql:8
+    container_name: mysql_qap
     environment:
-      - spring.datasource.url=jdbc:mysql://host.docker.internal:3306/hockey_db_2024
-      #- spring.datasource.url=jdbc:mysql://s4-fall-2022.ce2vcezehro2.us-east-1.rds.amazonaws.com/fall_2022
-      - spring.datasource.password=Keyin202!
-      - spring.datasource.username=root
+      MYSQL_DATABASE: hockey_db_2024
+      MYSQL_ROOT_PASSWORD: Keyin202!
+      MYSQL_PASSWORD: Keyin202!
+      MYSQL_USER: root
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+volumes:
+  mysql_data:
