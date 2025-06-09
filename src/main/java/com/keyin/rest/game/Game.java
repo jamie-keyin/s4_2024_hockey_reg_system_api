@@ -13,8 +13,10 @@ public class Game {
     @GeneratedValue(generator = "game_sequence")
     private long id;
     @ManyToOne
+    @JoinColumn(name = "home_team", referencedColumnName = "id")
     private Team homeTeam;
     @ManyToOne
+    @JoinColumn(name = "away_team", referencedColumnName = "id")
     private Team awayTeam;
     private String location;
     private LocalDateTime gameDate;
