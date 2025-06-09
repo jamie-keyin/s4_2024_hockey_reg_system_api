@@ -1,9 +1,8 @@
 package com.keyin.rest.game;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicLong;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -14,18 +13,16 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/games")
 public class GameController {
 
-    private List<Game> games = new ArrayList<>();
-    private AtomicLong idCounter = new AtomicLong();
+    @Autowired
+    private GameRepository gameRepository;
 
     @GetMapping
     public List<Game> getAllGames() {
-        return games;
+        return gameRepository.findAll();
     }
 
     @PostMapping
     public Game createGame(@RequestBody Game game) {
-        game.setId(idCounter.incrementAndGet());
-        games.add(game);
-        return game;
+        return gameRepository.save(game);
     }
 }
