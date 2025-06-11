@@ -32,7 +32,6 @@ public class Game {
     @Column(name = "scheduled_at", nullable = false)
     private LocalDateTime scheduledAt;
 
-    // Default constructor for JPA
     public Game() {}
 
     public Game(Team homeTeam, Team awayTeam, String location, LocalDateTime scheduledAt) {
