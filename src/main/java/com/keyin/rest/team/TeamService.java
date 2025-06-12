@@ -1,10 +1,7 @@
 package com.keyin.rest.team;
 
 import com.keyin.rest.division.Division;
-import com.keyin.rest.division.DivisionRepository;
 import com.keyin.rest.division.DivisionService;
-import com.keyin.rest.player.Player;
-import com.keyin.rest.player.PlayerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -40,6 +37,14 @@ public class TeamService {
         teamRepository.deleteById(id);
     }
 
+    // Example of JSON for creating team:
+    //    {
+    //        "name": "Dragons",
+    //        "division": { "name": "U11" }
+    //    }
+    // Note: the division name must already exist in the database
+    // Associating players with the team is done separately
+    // (and filling in junction table team_players)
     public Team createTeam(Team newTeam) {
         String divisionName = newTeam.getDivision().getName();
 

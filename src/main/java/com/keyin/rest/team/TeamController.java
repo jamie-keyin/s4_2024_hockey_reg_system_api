@@ -1,11 +1,6 @@
 package com.keyin.rest.team;
 
-import com.keyin.rest.division.Division;
-import com.keyin.rest.division.DivisionRepository;
-import com.keyin.rest.player.Player;
-import com.keyin.rest.player.PlayerService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

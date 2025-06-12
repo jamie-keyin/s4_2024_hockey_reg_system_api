@@ -1,7 +1,5 @@
 package com.keyin.rest.player;
 
-import com.keyin.rest.division.Division;
-import com.keyin.rest.division.DivisionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -32,6 +30,12 @@ public class PlayerController {
     @PostMapping("/player")
     public Player createPlayer(@RequestBody Player player) {
         return playerService.createPlayer(player);
+    }
+
+    // added by KET: POST endpoint to create multiple players
+    @PostMapping("/players")
+    public List<Player> createPlayers(@RequestBody List<Player> newPlayers) {
+        return playerService.createPlayers(newPlayers);
     }
 
     @PutMapping("/player/{id}")

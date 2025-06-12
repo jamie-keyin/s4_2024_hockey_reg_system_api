@@ -1,10 +1,6 @@
 package com.keyin.rest.player;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.SequenceGenerator;
-
+import jakarta.persistence.*;
 import java.util.Calendar;
 
 @Entity
@@ -14,7 +10,11 @@ public class Player {
     @SequenceGenerator(name = "player_sequence", sequenceName = "player_sequence", allocationSize = 1, initialValue=1)
     @GeneratedValue(generator = "player_sequence")
     private long id;
+
+    // birthday is stored as a date without time
+    @Temporal(TemporalType.DATE)
     private Calendar birthday;
+
     private String firstName;
     private String lastName;
 
@@ -50,4 +50,3 @@ public class Player {
         this.lastName = lastName;
     }
 }
-

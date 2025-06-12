@@ -14,6 +14,7 @@ public class Team {
     private long id;
 
     private String name;
+
     @ManyToMany
     private List<Player> players;
 

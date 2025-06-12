@@ -33,6 +33,12 @@ public class DivisionService {
         divisionRepository.deleteById(id);
     }
 
+    // Example of JSON for creating division:
+    //    {
+    //        "name": "U11",
+    //        "startBirthYear": 2012,
+    //        "endBirthYear": 2014
+    //    }
     public Division createDivision(Division newDivision) {
         return divisionRepository.save(newDivision);
     }
