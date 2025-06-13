@@ -1,0 +1,84 @@
+package com.keyin.rest.game;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.keyin.rest.team.Team;
+import jakarta.persistence.*;
+import java.time.LocalDateTime;
+
+@Entity
+public class Game {
+
+    @Id
+    @SequenceGenerator(
+            name = "game_sequence",
+            sequenceName = "game_sequence",
+            allocationSize = 1,
+            initialValue = 1)
+    @GeneratedValue(generator = "game_sequence")
+    private long id;
+
+    @ManyToOne
+    @JsonIgnoreProperties({"players", "division"})
+    private Team homeTeam;
+
+    @ManyToOne
+    @JsonIgnoreProperties({"players", "division"})
+    private Team awayTeam;
+
+    private String location;
+    private LocalDateTime scheduledDate;
+
+
+    public Game() {
+    }
+
+    public Game(Team homeTeam,
+                Team awayTeam,
+                String location,
+                LocalDateTime scheduledDate) {
+        this.homeTeam = homeTeam;
+        this.awayTeam = awayTeam;
+        this.location = location;
+        this.scheduledDate = scheduledDate;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public Team getHomeTeam() {
+        return homeTeam;
+    }
+
+    public void setHomeTeam(Team homeTeam) {
+        this.homeTeam = homeTeam;
+    }
+
+    public Team getAwayTeam() {
+        return awayTeam;
+    }
+
+    public void setAwayTeam(Team awayTeam) {
+        this.awayTeam = awayTeam;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public LocalDateTime getScheduledDate() {
+        return scheduledDate;
+    }
+
+    public void setScheduledDate(LocalDateTime scheduledDate) {
+        this.scheduledDate = scheduledDate;
+    }
+}
