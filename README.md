@@ -2,7 +2,7 @@
 
 Based on code forked from Jamie Cornick https://github.com/jamie-keyin/s4_2024_hockey_reg_system_api
 
-I have tried to stay with the original code structure and naming variants. For instance, the search endpoint is /search_game where I might have named it game/search.
+I have tried to stay with the original code structure and naming variants. For instance, the search endpoint is /game_search where I might have named it game/search.
 
 A key difference in this implementation is that more specific exceptions have been added at the GameService level to improve error handling.
 
@@ -103,13 +103,13 @@ Example Request (to delete game with ID 1):
 ## Search for Games
    Performs a dynamic search for games based on one or more criteria. All provided criteria are combined with an AND condition. If no parameters are provided, it returns all games.
 
-Endpoint: GET /search_game
+Endpoint: GET /game_search
 
 Query Parameters:
 
 location (String): The city or venue of the game.
 
-`date (String): The date of the game. Can be a full year (YYYY), year and month (YYYY-MM), a specific day (YYYY-MM-DD), or a full timestamp.`
+date (String): The date of the game. Can be a full year (YYYY), year and month (YYYY-MM), a specific day (YYYY-MM-DD), or a full timestamp.
 
 homeTeamId (Long): The ID of the home team.
 
@@ -124,21 +124,21 @@ Response: 200 OK with a list of matching games.
 ### Search Examples
 Find all games in a specific location:
 
-`curl "http://localhost:8080/search?location=St. John's"`
+`curl "http://localhost:8080/game_search?location=St. John's"`
 
 Find all games played during a specific month (e.g., June 2025):
 
-`curl "http://localhost:8080/search?date=2025-06"`
+`curl "http://localhost:8080/game_search?date=2025-06"`
 
 Find all games where a specific team was the home team:
 
-`curl "http://localhost:8080/search?homeTeamName= Growlers"`
+`curl "http://localhost:8080/game_search?homeTeamName= Growlers"`
 
 Find games by combining multiple criteria (location and home team ID):
 
-`curl "http://localhost:8080/search?location=Paradise&homeTeamId=1"`
+`curl "http://localhost:8080/game_search?location=Paradise&homeTeamId=1"`
 
 Find games on a specific day when a specific team was the away team:
 
-`curl "http://localhost:8080/search?date=2025-06-14&awayTeamName=Sports Team`
+`curl "http://localhost:8080/game_search?date=2025-06-14&awayTeamName=Sports Team`
 
