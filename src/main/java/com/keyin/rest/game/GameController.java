@@ -87,5 +87,5 @@ public class GameController {
     }
 
     @DeleteMapping("/game/{id}")
-    public void deleteGameById(@PathVariable long id) {gameService.deleteGameByID(id);}
+    public void deleteGameById(@PathVariable long id) {gameService.deleteGameById(id);}
 }
