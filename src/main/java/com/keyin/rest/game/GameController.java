@@ -30,7 +30,7 @@ public class GameController {
         return ResponseEntity.ok(gameToReturn);
     }
 
-    @GetMapping("/search")
+    @GetMapping("/game_search")
     public ResponseEntity<List<Game>> searchGames(
             @RequestParam(value = "location", required = false) String location,
             @RequestParam(value = "date", required = false) String date,
