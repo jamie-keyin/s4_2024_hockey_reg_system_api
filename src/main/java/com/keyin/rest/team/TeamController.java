@@ -2,6 +2,7 @@ package com.keyin.rest.team;
 
 import com.keyin.rest.division.Division;
 import com.keyin.rest.division.DivisionRepository;
+import com.keyin.rest.dto.TeamDTO;
 import com.keyin.rest.player.Player;
 import com.keyin.rest.player.PlayerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,10 +19,10 @@ public class TeamController {
     @Autowired
     private TeamService teamService;
 
-    @GetMapping("/team")
-    public List<Team> getAllTeams() {
-        return teamService.getAllTeams();
-    }
+//    @GetMapping("/team")
+//    public List<Team> getAllTeams() {
+//        return teamService.getAllTeams();
+//    }
 
     @GetMapping("team_search")
     public List<Team> getTeamsByPlayerLastName(@RequestParam(value = "player_last_name", required = false) String playerLastName,
@@ -47,6 +48,15 @@ public class TeamController {
 
         return ResponseEntity.ok(teamToReturn);
     }
+
+    @GetMapping("/team")
+    public List<TeamDTO> getAllTeams() {
+        return teamService.getAllTeams()
+                .stream()
+                .map(TeamDTO::new)
+                .toList();
+    }
+
 
     @PostMapping("/team")
     public Team createTeam(@RequestBody Team team) {

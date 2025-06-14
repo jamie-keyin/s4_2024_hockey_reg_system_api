@@ -9,7 +9,6 @@ import java.util.Calendar;
 
 @Entity
 public class Player {
-
     @Id
     @SequenceGenerator(name = "player_sequence", sequenceName = "player_sequence", allocationSize = 1, initialValue=1)
     @GeneratedValue(generator = "player_sequence")
