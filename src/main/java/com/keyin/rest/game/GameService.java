@@ -27,9 +27,6 @@ public class GameService {
     private GameRepository gameRepository;
 
     @Autowired
-    private CriteriaBuilder criteriaBuilder;
-
-    @Autowired
     private EntityManager entityManager;
 
     public List<Game> getAllGames() {return (List<Game>) gameRepository.findAll();}
@@ -41,7 +38,7 @@ public class GameService {
         return gameOptional.orElse(null);
     }
 
-    public void deleteGameByID(long id) {gameRepository.deleteById(id);}
+    public void deleteGameById(long id) {gameRepository.deleteById(id);}
 
     public Game createGame(Game newGame) { return gameRepository.save(newGame);}
 
