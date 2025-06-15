@@ -1,0 +1,18 @@
+
+# Hockey League API Test Cases
+
+### Get all games
+GET http://localhost:8080/game
+Accept: application/json
+
+
+### Create a new game
+POST http://localhost:8080/game
+Content-Type: application/json
+
+{
+  "homeTeamId": 1,
+    "awayTeamId": 2,
+    "location": "Paradise Ice Rink",
+    "scheduledDate": "2025-10-01T15:00:00Z"
+}
