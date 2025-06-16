@@ -1,14 +1,19 @@
 package com.keyin.rest.game;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.SequenceGenerator;
+
 import com.keyin.rest.team.Team;
 import java.util.Date;
 
 @Entity
 public class Game {
     @Id
+    @SequenceGenerator(name = "game_sequence", sequenceName = "game_sequence", allocationSize = 1, initialValue=1)
+    @GeneratedValue(generator = "game_sequence")
     private Long id;
 
     @ManyToOne
