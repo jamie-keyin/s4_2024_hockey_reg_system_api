@@ -26,7 +26,7 @@ public class DivisionController {
 
     @GetMapping("/division_search")
     public List<Division> searchDivisions(@RequestParam(value = "division_name", required = false) String divisionName,
-                                          @RequestParam(value = "division_start_birth_year", required = false) String divisionStartBirthYear) {
+            @RequestParam(value = "division_start_birth_year", required = false) String divisionStartBirthYear) {
         List<Division> results = new ArrayList<Division>();
 
         if (divisionName != null) {
@@ -45,7 +45,7 @@ public class DivisionController {
 
     @PostMapping("/division")
     public Division createDivision(@RequestBody Division division) {
-       return divisionService.createDivision(division);
+        return divisionService.createDivision(division);
     }
 
     @PutMapping("/division/{id}")

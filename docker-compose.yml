@@ -1,7 +1,7 @@
 version: '3'
 services:
   myapp-main:
-    image: hockey_db_api:latest
+    build: .
     ports:
       - 8080:8080
     environment:
