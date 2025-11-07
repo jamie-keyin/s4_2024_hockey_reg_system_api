@@ -1,11 +1,6 @@
 package com.keyin.rest.team;
 
-import com.keyin.rest.division.Division;
-import com.keyin.rest.division.DivisionRepository;
-import com.keyin.rest.player.Player;
-import com.keyin.rest.player.PlayerService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,8 +19,8 @@ public class TeamController {
     }
 
     @GetMapping("team_search")
-    public List<Team> getTeamsByPlayerLastName(@RequestParam(value = "player_last_name", required = false) String playerLastName,
-                                               @RequestParam(value = "division_name", required = false) String divisionName) {
+    public List<Team> searchTeams(@RequestParam(value = "player_last_name", required = false) String playerLastName,
+                                  @RequestParam(value = "division_name", required = false) String divisionName) {
         List<Team> results = new ArrayList<Team>();
 
         if (playerLastName != null) {
