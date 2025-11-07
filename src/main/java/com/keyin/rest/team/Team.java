@@ -13,7 +13,7 @@ public class Team {
     @GeneratedValue(generator = "team_sequence")
     private long id;
 
-    private String name;
+    private String teamName;
     @ManyToMany
     private List<Player> players;
 
@@ -28,12 +28,12 @@ public class Team {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getTeamName() {
+        return teamName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setTeamName(String teamName) {
+        this.teamName = teamName;
     }
 
     public List<Player> getPlayers() {
