@@ -5,6 +5,7 @@ import com.keyin.rest.division.DivisionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -14,6 +15,8 @@ public class TeamService {
     private TeamRepository teamRepository;
     @Autowired
     private DivisionService divisionService;
+    @Autowired
+    private PlayerRepository playerRepository;
 
     public List<Team> getAllTeams() {
         return (List<Team>) teamRepository.findAll();
@@ -69,5 +72,25 @@ public class TeamService {
         }
 
         return null;
+    }
+
+    public Team findByName(String name) {
+        return teamRepository.findByName(name);
+    }
+
+    public Team addPlayersToTeam(Long teamId, List<Player> players) {
+        Optional<Team> teamOptional = teamRepository.findById(teamId);
+        if (teamOptional.isEmpty()) return null;
+
+        Team team = teamOptional.get();
+
+        List<Player> savedPlayers = new ArrayList<>();
+        for (Player player : players) {
+            Player saved = playerRepository.save(player);
+            savedPlayers.add(saved);
+        }
+
+        team.getPlayers().addAll(savedPlayers);
+        return teamRepository.save(team);
     }
 }
